@@ -20,8 +20,7 @@
         <label class="mt-3 form-label">Price:</label>
         <form:input class="form-control" value="${model.price}" type="number" path="price" placeholder="Enter price"/>
         <form:errors cssClass="text-danger d-block" path="price"/>
-
-        <button id="btnAddOrUpdateService" class="btn btn-primary mt-3" type="submit">${(model.id == null || model.id == 0) ? "Add" : "Update"} service</button>
+        <button id="btnAddOrUpdateService" class="btn btn-primary mt-3" type="submit">${(model.id == null || model.id == "") ? "Add" : "Update"} service</button>
     </form:form>
 </body>
 </html>

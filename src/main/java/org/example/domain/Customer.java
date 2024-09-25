@@ -3,10 +3,7 @@ package org.example.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.List;
@@ -34,6 +31,6 @@ public class Customer {
     @Pattern(regexp = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$", message = "Email is invalid")
     String email;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customerComputerId.customer", cascade = CascadeType.ALL)
     List<CustomerComputer> customerComputers;
 }

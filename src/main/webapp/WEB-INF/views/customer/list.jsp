@@ -67,7 +67,7 @@
                                                     <td>${item.email}</td>
                                                     <td>
                                                         <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                           title="Cập nhật bài viết" href='${editURL}'><i class="fa-solid fa-pen-to-square"></i>
+                                                           title="Update customer" href='/customer/${item.id}'><i class="fa-solid fa-pen-to-square"></i>
                                                         </a>
                                                     </td>
                                                 </tr>

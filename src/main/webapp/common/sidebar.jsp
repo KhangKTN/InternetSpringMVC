@@ -14,9 +14,9 @@
             <a href="/customer/list?page=1&maxPageItem=2" class="list-group-item list-group-item-action py-2 ripple rounded-pill">
                 <i class="fas fa-chart-pie fa-fw me-3"></i><span>List customer</span>
             </a>
-            <a href="listService?type=list&page=1&maxPageItem=2&sortName=title&sortBy=desc" class="list-group-item list-group-item-action py-2 ripple rounded-pill"><i
+            <a href="/service/list?page=1&maxPageItem=2" class="list-group-item list-group-item-action py-2 ripple rounded-pill"><i
                     class="fas fa-chart-bar fa-fw me-3"></i><span>List service</span></a>
-            <a href="register-computer" class="list-group-item list-group-item-action py-2 ripple rounded-pill"><i
+            <a href="/computer/register" class="list-group-item list-group-item-action py-2 ripple rounded-pill"><i
                     class="fas fa-globe fa-fw me-3"></i><span>Register computer</span></a>
             <a href="register-service" class="list-group-item list-group-item-action py-2 ripple rounded-pill"><i
                     class="fas fa-building fa-fw me-3"></i><span>Register service</span></a>

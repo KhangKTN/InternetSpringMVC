@@ -26,19 +26,19 @@ public class CustomerController {
     }
 
     @PostMapping("")
-    public String saveCustomer(@ModelAttribute("model") @Valid Customer customer, BindingResult bindingResult) {
+    public String saveCustomer(@ModelAttribute("model") @Valid Customer customer, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "customer/save";
         }
-        String id = customerService.saveCustomer(customer);
+        model.addAttribute("message", customerService.saveCustomer(customer));
         return "customer/save";
     }
 
     @GetMapping("list")
     public String getCustomerList(Model model,
-          @RequestParam("page") Optional<Integer> page,
-          @RequestParam("maxPageItem") Optional<Integer> maxPageItem,
-          @RequestParam("search") Optional<String> searchKey
+                                  @RequestParam("page") Optional<Integer> page,
+                                  @RequestParam("maxPageItem") Optional<Integer> maxPageItem,
+                                  @RequestParam("search") Optional<String> searchKey
     ) {
         Pageable pageable = new PageRequest(page.orElse(1) - 1, maxPageItem.orElse(2));
         model.addAttribute("list", customerService.getAllCustomers(pageable, searchKey));
@@ -46,5 +46,11 @@ public class CustomerController {
         model.addAttribute("page", page.orElse(1));
         model.addAttribute("search", searchKey.orElse(""));
         return "customer/list";
+    }
+
+    @GetMapping("{id}")
+    public String getUpdateCustomer(@PathVariable("id") String id, Model model) {
+        model.addAttribute("model", customerService.getById(id));
+        return "customer/save";
     }
 }

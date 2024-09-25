@@ -17,7 +17,16 @@ public class CustomerService {
 
     @Transactional
     public String saveCustomer(Customer customer) {
-        return customerRepository.save(customer).getId();
+        Customer currentCustomer = customerRepository.findById(customer.getId());
+        if(currentCustomer != null) {
+            return "Error! Customer already exists!";
+        }
+        customerRepository.save(customer);
+        return "Customer successfully saved!";
+    }
+
+    public List<Customer> getAllCustomer() {
+        return customerRepository.findAll();
     }
 
     public List<Customer> getAllCustomers(Pageable pageable, Optional<String> searchKey) {
@@ -32,5 +41,9 @@ public class CustomerService {
             return customerRepository.countByNameContaining(searchKey.get());
         }
         return customerRepository.count();
+    }
+
+    public Customer getById(String id) {
+        return customerRepository.findById(id);
     }
 }

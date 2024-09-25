@@ -1,14 +1,8 @@
 <%@include file="/common/taglib.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Computer List</title>
-</head>
-<body>
-<h1 class="text-primary">List Computer</h1>
-<form id="formSubmit" method="get">
-    <div class="main-content-inner">
 
+<h1 class="text-primary">List Service</h1>
+<form id="formSubmit" method="get" class="mt-5">
+    <div class="main-content-inner">
         <div class="page-content">
             <div class="row">
                 <div class="col-xs-12">
@@ -17,9 +11,9 @@
                     <%--                                        ${messageResponse}--%>
                     <%--                                </div>--%>
                     <%--                            </c:if>--%>
-                    <div class="widget-box table-filter">
+                    <div class="widget-box table-filter mb-3">
                         <div class="table-btn-controls">
-                            <div class="pull-right tableTools-container">
+                            <div class="pull-right tableTools-container d-flex justify-content-between">
                                 <div class="dt-buttons btn-overlap btn-group">
                                     <a flag="info"
                                        class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
@@ -35,6 +29,12 @@
 																</span>
                                     </button>
                                 </div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input value="${search}" id="searchField" name="search" class="form-control col-9" placeholder="Search...">
+                                        <button type="button" id="searchBtn" class="btn btn-secondary col-3">Search</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -45,9 +45,10 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" id="checkAll"></th>
-                                        <th>Computer ID</th>
-                                        <th>Position</th>
-                                        <th>Status</th>
+                                        <th>Service ID</th>
+                                        <th>Name</th>
+                                        <th>Unit</th>
+                                        <th>Price</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -55,24 +56,25 @@
                                         <tr>
                                             <td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}"></td>
                                             <td>${item.id}</td>
-                                            <td>${item.position}</td>
-                                            <td>${item.status}</td>
+                                            <td>${item.name}</td>
+                                            <td>${item.unit}</td>
+                                            <td>${item.price}</td>
                                             <td>
                                                 <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                                   title="Update computer" href='/computer/${item.id}'><i class="fa-solid fa-pen-to-square"></i>
+                                                   title="Update service" href='/service/${item.id}'><i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
+                                <ul class="pagination" id="pagination"></ul>
+                                <input type="hidden" value="" id="page" name="page"/>
+                                <input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
+<%--                                <input type="hidden" value="" id="sortName" name="sortName"/>--%>
+<%--                                <input type="hidden" value="" id="sortBy" name="sortBy"/>--%>
+<%--                                <input type="hidden" value="" id="type" name="type"/>--%>
                             </div>
-                            <ul class="pagination" id="pagination"></ul>
-                            <input type="hidden" value="" id="page" name="page"/>
-                            <input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
-<%--                            <input type="hidden" value="" id="sortName" name="sortName"/>--%>
-<%--                            <input type="hidden" value="" id="sortBy" name="sortBy"/>--%>
-<%--                            <input type="hidden" value="" id="type" name="type"/>--%>
                         </div>
                     </div>
                 </div>
@@ -94,16 +96,22 @@
                 if (currentPage != page) {
                     $('#maxPageItem').val(limit);
                     $('#page').val(page);
-                    // $('#sortName').val('title');
-                    // $('#sortBy').val('desc');
-                    // $('#type').val('list');
+                    $('#sortName').val('title');
+                    $('#sortBy').val('desc');
+                    $('#type').val('list');
                     $('#formSubmit').submit();
                 }
             }
         });
     });
+
+    $('#searchBtn').click(function (e) {
+        e.preventDefault();
+        $('#maxPageItem').val(limit);
+        $('#page').val(1);
+        $('#searchField').val();
+        $('#formSubmit').submit();
+    })
 </script>
 <script>
 </script>
-</body>
-</html>

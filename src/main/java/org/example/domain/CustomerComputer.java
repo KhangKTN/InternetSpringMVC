@@ -1,5 +1,8 @@
 package org.example.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,25 +10,20 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "customer_computer")
-public class CustomerComputer implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Getter @Setter
+public class CustomerComputer{
+    @EmbeddedId
+    private CustomerComputerId customerComputerId;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "customerId")
-    Customer customer;
+//    @ManyToOne
+//    @JoinColumn(name = "customerId")
+//    @MapsId(value = "customerId")
+//    Customer customer;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "computerId")
+//    @MapsId(value = "computerId")
+//    Computer computer;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "computerId")
-    Computer computer;
-
-    @Id
-    @Column(columnDefinition = "Date")
-    LocalDate startDate;
-
-    @Id
-    @Column(columnDefinition = "Time")
-    LocalTime startTime;
     int timeUsed;
 }

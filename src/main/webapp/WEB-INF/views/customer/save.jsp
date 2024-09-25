@@ -17,7 +17,7 @@
         <form:input class="form-control mt-3" type="text" value="${model.email}" path="email" placeholder="Enter email"/>
         <form:errors cssClass="text-danger mt-3" path="email"/>
         <div>
-            <button id="btnAddOrUpdateCustomer" class="btn btn-primary mt-5" type="submit">${model.id == null ? "Add" : "Update"} computer</button>
+            <button id="btnAddOrUpdateCustomer" class="btn btn-primary mt-5" type="submit">${(model.id == null || model.id == "") ? "Add" : "Update"} computer</button>
         </div>
     </form:form>
 </div>

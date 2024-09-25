@@ -20,6 +20,6 @@ public class Computer {
     @NotBlank(message = "Status is not blank")
     String status;
 
-    @OneToMany(mappedBy = "computer")
+    @OneToMany(mappedBy = "customerComputerId.computer", cascade = CascadeType.ALL)
     List<CustomerComputer> customerComputers;
 }
