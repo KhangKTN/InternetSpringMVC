@@ -1,11 +1,13 @@
 package org.example.domain;
 
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Embeddable
 @Getter @Setter
 @EqualsAndHashCode
-public class CustomerComputerId implements Serializable {
+public class CustomerServiceId implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne
@@ -21,20 +23,21 @@ public class CustomerComputerId implements Serializable {
     Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "computerId")
-    Computer computer;
+    @JoinColumn(name = "serviceId")
+    ServiceDomain serviceDomain;
 
-    String startDate;
+    String dateUse;
 
-    String startTime;
+    @Column(columnDefinition = "Time")
+    LocalTime timeUse;
 
-    public CustomerComputerId() {}
+    public CustomerServiceId(){}
 
-    public void setStartDate() {
-        this.startDate = LocalDate.now().toString();
+    public void setDateUse() {
+        this.dateUse = LocalDate.now().toString();
     }
 
-    public void setStartTime() {
-        this.startTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+    public void setTimeUse() {
+        this.timeUse = LocalTime.now();
     }
 }

@@ -13,9 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
@@ -34,14 +37,14 @@ public class ComputerController {
     }
 
     @PostMapping("")
-    public String createComputer(@ModelAttribute("computer") @Validated Computer computer, BindingResult bindingResult, Model model) {
+    public String createComputer(@ModelAttribute("computer") @Valid Computer computer, BindingResult bindingResult, Model model, RedirectAttributes ra) {
         if (bindingResult.hasErrors()) {
             return "computer/save";
         }
 
         Long id = computerService.saveComputer(computer);
-        if (id != 0) model.addAttribute("message", "Computer saved successfully");
-        return "computer/save";
+        if (id != 0) ra.addFlashAttribute("message", "Computer saved successfully");
+        return "redirect:/computer";
     }
 
     @GetMapping("list")
@@ -59,27 +62,34 @@ public class ComputerController {
 
     @GetMapping("register")
     public String getPageRegisterComputer(Model model) {
-        model.addAttribute("model", new CustomerComputer());
+        CustomerComputer customerComputer = new CustomerComputer();
+        CustomerComputerId customerComputerId = new CustomerComputerId();
+        customerComputerId.setStartDate();
+        customerComputerId.setStartTime();
+
+        customerComputer.setCustomerComputerId(customerComputerId);
+
+        model.addAttribute("model", customerComputer);
         model.addAttribute("customerList", customerService.getAllCustomer());
         model.addAttribute("computerList", computerService.getAllComputers());
         return "computer/register";
     }
 
     @PostMapping("register")
-    public String createRegisterComputer(@ModelAttribute("model") @Validated CustomerComputer customerComputer, BindingResult bindingResult, Model model) {
-        CustomerComputerId customerComputerId = customerComputer.getCustomerComputerId();
-        customerComputerId.setStartDate(LocalDate.now().toString());
+    public String createRegisterComputer(@ModelAttribute("model") @Validated CustomerComputer customerComputer, BindingResult bindingResult, Model model, RedirectAttributes ra) {
+        if(bindingResult.hasErrors()) {
+            ra.addFlashAttribute("message", "Error! " + bindingResult.getFieldError("timeUsed").getDefaultMessage());
+            return "redirect:/computer/register";
+        }
 
-        Long computerId = customerComputerId.getComputer().getId();
-        String customerId = customerComputerId.getCustomer().getId();
+        if(LocalDate.parse(customerComputer.getCustomerComputerId().getStartDate()).isBefore(LocalDate.now())){
+            ra.addFlashAttribute("message", "Error! " + "Date cannot be in the past");
+            return "redirect:/computer/register";
+        }
 
-        customerComputerId.setCustomer(customerService.getById(customerId));
-        customerComputerId.setComputer(computerService.getById(computerId));
+        ra.addFlashAttribute("message", computerService.registerComputer(customerComputer));
 
-        customerComputer.setCustomerComputerId(customerComputerId);
-
-        computerService.createCustomerComputer(customerComputer);
-        return "computer/register";
+        return "redirect:/computer/register";
     }
 
     @GetMapping("{id}")

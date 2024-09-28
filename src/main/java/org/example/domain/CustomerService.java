@@ -1,31 +1,22 @@
 package org.example.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "customer_service")
-public class CustomerService implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Getter @Setter
+public class CustomerService{
+    @EmbeddedId
+    private CustomerServiceId customerServiceId;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "customerId")
-    Customer customer;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "serviceId")
-    ServiceDomain service;
-    @Id
-    @Column(columnDefinition = "Date")
-    LocalDate dateUse;
-
-    @Id
-    @Column(columnDefinition = "Time")
-    LocalTime timeUse;
+    @Min(value = 1, message = "Quantity must be greater than 1")
     int quantity;
 }
 

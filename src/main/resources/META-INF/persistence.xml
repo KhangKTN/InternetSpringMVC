@@ -6,5 +6,10 @@
         <class>org.example.domain.ServiceDomain</class>
         <class>org.example.domain.CustomerComputer</class>
         <class>org.example.domain.CustomerService</class>
+
+<!--        <properties>-->
+<!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />-->
+<!--            <property name="hibernate.jdbc.time_zone" value="GMT+7"/>-->
+<!--        </properties>-->
     </persistence-unit>
 </persistence>

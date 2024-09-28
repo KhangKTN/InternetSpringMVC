@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,5 +26,6 @@ public class CustomerComputer{
 //    @MapsId(value = "computerId")
 //    Computer computer;
 
+    @Min(1)
     int timeUsed;
 }

@@ -22,7 +22,17 @@ public class CustomerService {
             return "Error! Customer already exists!";
         }
         customerRepository.save(customer);
-        return "Customer successfully saved!";
+        return "Customer successfully created!";
+    }
+
+    public String updateCustomer(Customer customer) {
+        Customer currentCustomer = customerRepository.findById(customer.getId());
+        if(currentCustomer == null) {
+            return "Error! Customer not found!";
+        }
+        customer.setEmail(customer.getEmail());
+        customerRepository.save(customer);
+        return "Customer successfully updated!";
     }
 
     public List<Customer> getAllCustomer() {

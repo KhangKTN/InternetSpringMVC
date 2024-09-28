@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1 class="text-primary">List Customer</h1>
-    <form id="formSubmit" method="get">
+    <form id="formSubmit" method="get" class="mt-5">
             <div class="main-content-inner">
                 <div class="page-content">
                     <div class="row">
@@ -18,21 +18,15 @@
                             <div class="widget-box table-filter mb-3">
                                 <div class="table-btn-controls">
                                     <div class="pull-right tableTools-container d-flex justify-content-between">
-                                        <div class="dt-buttons btn-overlap btn-group">
-                                            <a flag="info"
-                                               class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
-                                               title='Thêm bài viết' >
-                                                    <span>
-                                                        <i class="fa fa-plus-circle bigger-110 purple"></i>
-                                                    </span>
-                                            </a>
-                                            <button id="btnDelete" type="button"
-                                                    class="dt-button buttons-html5 btn btn-white btn-primary btn-bold" data-toggle="tooltip" title='Xóa bài viết'>
-                                                        <span>
-                                                            <i class="fa fa-trash-o bigger-110 pink"></i>
-                                                        </span>
-                                            </button>
-                                        </div>
+                                        <a flag="info"
+                                           href="/computer"
+                                           class="dt-button buttons-colvis btn btn-lg btn-white btn-outline-primary btn-bold" data-toggle="tooltip"
+                                           title='Add computer' >
+                                            <span>
+                                                <i class="fa-solid fa-plus me-2"></i>
+                                            </span>
+                                            Add new
+                                        </a>
                                         <div class="col-4">
                                             <div class="input-group">
                                                 <input value="${search}" id="searchField" name="search" class="form-control col-9" placeholder="Search...">
@@ -44,7 +38,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive my-3">
                                         <table class="table table-bordered">
                                             <thead>
                                             <tr>
@@ -74,13 +68,13 @@
                                             </c:forEach>
                                             </tbody>
                                         </table>
-                                        <ul class="pagination" id="pagination"></ul>
-                                        <input type="hidden" value="" id="page" name="page"/>
-                                        <input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
-<%--                                        <input type="hidden" value="" id="sortName" name="sortName"/>--%>
-<%--                                        <input type="hidden" value="" id="sortBy" name="sortBy"/>--%>
-<%--                                        <input type="hidden" value="" id="type" name="type"/>--%>
                                     </div>
+                                    <ul class="pagination" id="pagination"></ul>
+                                    <input type="hidden" value="" id="page" name="page"/>
+                                    <input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
+                                    <%--                                        <input type="hidden" value="" id="sortName" name="sortName"/>--%>
+                                    <%--                                        <input type="hidden" value="" id="sortBy" name="sortBy"/>--%>
+                                    <%--                                        <input type="hidden" value="" id="type" name="type"/>--%>
                                 </div>
                             </div>
                         </div>
