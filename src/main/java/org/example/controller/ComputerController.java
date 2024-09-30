@@ -17,8 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
@@ -77,12 +75,12 @@ public class ComputerController {
 
     @PostMapping("register")
     public String createRegisterComputer(@ModelAttribute("model") @Validated CustomerComputer customerComputer, BindingResult bindingResult, Model model, RedirectAttributes ra) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             ra.addFlashAttribute("message", "Error! " + bindingResult.getFieldError("timeUsed").getDefaultMessage());
             return "redirect:/computer/register";
         }
 
-        if(LocalDate.parse(customerComputer.getCustomerComputerId().getStartDate()).isBefore(LocalDate.now())){
+        if (LocalDate.parse(customerComputer.getCustomerComputerId().getStartDate()).isBefore(LocalDate.now())) {
             ra.addFlashAttribute("message", "Error! " + "Date cannot be in the past");
             return "redirect:/computer/register";
         }
@@ -96,5 +94,14 @@ public class ComputerController {
     public String getUpdateComputer(@PathVariable Long id, Model model) {
         model.addAttribute("computer", computerService.getById(id));
         return "computer/save";
+    }
+
+    @GetMapping("delete/{id}/")
+    public String deleteComputer(@PathVariable Long id,
+                                 @RequestParam("page") Optional<Integer> page,
+                                 @RequestParam("maxPageItem") Optional<Integer> maxPageItem,
+                                 RedirectAttributes ra) {
+        ra.addFlashAttribute("message", computerService.deleteComputer(id));
+        return "redirect:/computer/list?" + "page=" + page.orElse(1) + "&maxPageItem=" + maxPageItem.orElse(2);
     }
 }

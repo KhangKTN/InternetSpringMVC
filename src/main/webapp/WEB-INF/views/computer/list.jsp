@@ -11,11 +11,6 @@
         <div class="page-content">
             <div class="row">
                 <div class="col-xs-12">
-                    <%--                            <c:if test="${not empty messageResponse}">--%>
-                    <%--                                <div class="alert alert-${alert}">--%>
-                    <%--                                        ${messageResponse}--%>
-                    <%--                                </div>--%>
-                    <%--                            </c:if>--%>
                     <div class="widget-box table-filter">
                         <div class="table-btn-controls">
                             <div class="pull-right tableTools-container">
@@ -55,7 +50,7 @@
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 <a data-bs-custom-class="bg-danger" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover focus" data-bs-content="Delete computer" class="btn btn-sm btn-outline-danger"
-                                                   href='/computer/delete/${item.id}'><i class="fa-solid fa-trash"></i>
+                                                   href='/computer/delete/${item.id}/?page=${page}&maxPageItem=2' onclick="return confirm('Do you want delete?')"><i class="fa-solid fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>

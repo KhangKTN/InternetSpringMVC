@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -78,5 +75,17 @@ public class ComputerService{
 
         computerService.createCustomerComputer(customerComputer);
         return "Register computer successfully!";
+    }
+
+    public String deleteComputer(Long computerId) {
+        Computer computer = computerRepository.findOne(computerId);
+        if(computer == null) {
+            return "Error! This computer doesn't exist!";
+        }
+        if(customerComputerRepository.existsByCustomerComputerIdComputerId(computerId)) {
+            return "Error! This computer cannot delete because it is used!";
+        }
+//        computerRepository.delete(computer);
+        return "Delete computer successfully!";
     }
 }

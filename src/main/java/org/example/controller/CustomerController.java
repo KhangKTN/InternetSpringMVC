@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.domain.Customer;
 import org.example.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class CustomerController {
 
     @PostMapping("update")
     public String updateCustomer(@ModelAttribute("model") @Valid Customer customer, BindingResult bindingResult, RedirectAttributes ra, Model model) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("type", "edit");
             return "customer/save";
         }
@@ -53,8 +54,9 @@ public class CustomerController {
                                   @RequestParam("search") Optional<String> searchKey
     ) {
         Pageable pageable = new PageRequest(page.orElse(1) - 1, maxPageItem.orElse(2));
-        model.addAttribute("list", customerService.getAllCustomers(pageable, searchKey));
-        model.addAttribute("totalPage", Math.ceil((double) customerService.countAllCustomers(searchKey) / maxPageItem.orElse(2)));
+        Page<Customer> customerPage = customerService.getAllCustomers(pageable, searchKey);
+        model.addAttribute("list", customerPage.getContent());
+        model.addAttribute("totalPage", customerPage.getTotalPages());
         model.addAttribute("page", page.orElse(1));
         model.addAttribute("search", searchKey.orElse(""));
         return "customer/list";
@@ -65,5 +67,14 @@ public class CustomerController {
         model.addAttribute("type", "edit");
         model.addAttribute("model", customerService.getById(id));
         return "customer/save";
+    }
+
+    @GetMapping("delete/{id}/")
+    public String deleteCustomer(@PathVariable("id") String customerId,
+                                 @RequestParam("page") Optional<Integer> page,
+                                 @RequestParam("maxPageItem") Optional<Integer> maxPageItem,
+                                 RedirectAttributes ra) {
+        ra.addFlashAttribute("message", customerService.deleteCustomer(customerId));
+        return "redirect:/customer/list?" + "page=" + page.orElse(1) + "&maxPageItem=" + maxPageItem.orElse(2);
     }
 }

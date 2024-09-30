@@ -2,18 +2,11 @@ package org.example.repository;
 
 import org.example.domain.CustomerService;
 import org.example.domain.CustomerServiceId;
-import org.example.dto.ServiceUsingDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface CustomerServiceRepository extends JpaRepository<CustomerService, CustomerServiceId> {
@@ -38,4 +31,8 @@ public interface CustomerServiceRepository extends JpaRepository<CustomerService
             " AND DATE_ADD(CAST(CONCAT(?2, ' ', ?3) as datetime), INTERVAL ?4 MINUTE)"
     , nativeQuery = true)
     List<Object[]> findByCustomer(String customerId, String startDate, String startTime, int timeUse);
+
+    boolean existsByCustomerServiceIdServiceDomainId(String serviceId);
+
+    boolean existsByCustomerServiceIdCustomerId(String id);
 }

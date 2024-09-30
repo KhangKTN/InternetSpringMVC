@@ -4,7 +4,7 @@
 </head>
 <body>
     <h1 class="text-primary">${(type == 'edit') ? "Update" : "Create"} Service</h1>
-    <form:form action="${model.id == null || model.id == '' ? '/service' : '/service/update'}" method="post" modelAttribute="model" class="mt-5 w-75">
+    <form:form action="${type == 'edit' ? '/service/update' : '/service'}" method="post" modelAttribute="model" class="mt-5 w-75">
         <label class="form-label">ID:</label>
         <form:input class="form-control" type="text" readonly="${type == 'edit'}" value="${model.id}" path="id" placeholder="ID"/>
         <form:errors cssClass="text-danger d-block" path="id"/>

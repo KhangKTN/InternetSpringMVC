@@ -5,7 +5,7 @@
 <body>
 <div>
     <h1 class="text-primary">${type == 'edit' ? "Update" : "Create"} Customer</h1>
-    <form:form action="${model.id == null || model.id == '' ? '/customer' : '/customer/update'}" method="post" modelAttribute="model" class="mt-5 col-9">
+    <form:form action="${type == 'edit' ? '/customer/update' : '/customer'}" method="post" modelAttribute="model" class="mt-5 col-9">
         <div>
             <label class="form-label">Customer ID:</label>
             <form:input readonly="${type == 'edit'}" cssErrorClass="is-invalid form-control" class="form-control" type="text" value="${model.id}" path="id" placeholder="ID"/>

@@ -1,7 +1,6 @@
 package org.example.service;
 
 import org.example.domain.CustomerComputer;
-import org.example.domain.CustomerService;
 import org.example.dto.ServiceUsingDTO;
 import org.example.repository.CustomerComputerRepository;
 import org.example.repository.CustomerServiceRepository;
@@ -12,10 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CustomerUsingService {

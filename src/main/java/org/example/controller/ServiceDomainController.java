@@ -5,6 +5,7 @@ import org.example.domain.ServiceDomain;
 import org.example.service.CustomerService;
 import org.example.service.ServiceInternetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Optional;
 
 @Controller
@@ -46,8 +44,8 @@ public class ServiceDomainController {
     }
 
     @PostMapping("update")
-    public String updateService(@ModelAttribute("model") @Valid ServiceDomain serviceDomain, BindingResult bindingResult, RedirectAttributes ra, Model model){
-        if(bindingResult.hasErrors()) {
+    public String updateService(@ModelAttribute("model") @Valid ServiceDomain serviceDomain, BindingResult bindingResult, RedirectAttributes ra, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("type", "edit");
             return "service/save";
         }
@@ -62,8 +60,9 @@ public class ServiceDomainController {
                                  @RequestParam("search") Optional<String> searchKey) {
 
         Pageable pageable = new PageRequest(page.orElse(1) - 1, maxPageItem.orElse(2));
-        model.addAttribute("list", serviceInternetService.getAllServices(pageable, searchKey));
-        model.addAttribute("totalPage", Math.ceil((double) serviceInternetService.countServices(searchKey) / maxPageItem.orElse(2)));
+        Page<ServiceDomain> serviePage = serviceInternetService.getAllServices(pageable, searchKey);
+        model.addAttribute("list", serviePage.getContent());
+        model.addAttribute("totalPage", serviePage.getTotalPages());
         model.addAttribute("page", page.orElse(1));
         model.addAttribute("search", searchKey.orElse(""));
         return "service/list";
@@ -77,7 +76,7 @@ public class ServiceDomainController {
     }
 
     @GetMapping("register")
-    public String getPageRegisterService(Model model){
+    public String getPageRegisterService(Model model) {
         org.example.domain.CustomerService cs = new org.example.domain.CustomerService();
         CustomerServiceId customerServiceId = new CustomerServiceId();
         customerServiceId.setDateUse();
@@ -94,10 +93,19 @@ public class ServiceDomainController {
     @PostMapping("register")
     public String createRegisterService(@ModelAttribute() @Valid org.example.domain.CustomerService service, BindingResult bindingResult, RedirectAttributes ra) {
         if (bindingResult.hasErrors()) {
-            ra.addFlashAttribute("message", "Error! " + bindingResult.getFieldError().getDefaultMessage() );
+            ra.addFlashAttribute("message", "Error! " + bindingResult.getFieldError().getDefaultMessage());
             return "redirect:/service/register";
         }
         ra.addFlashAttribute("message", serviceInternetService.registerService(service));
         return "redirect:/service/register";
+    }
+
+    @GetMapping("delete/{id}/")
+    public String deleteService(@PathVariable("id") String id,
+                                @RequestParam("page") Optional<Integer> page,
+                                @RequestParam("maxPageItem") Optional<Integer> maxPageItem,
+                                RedirectAttributes ra) {
+        ra.addFlashAttribute("message", serviceInternetService.deleteService(id));
+        return "redirect:/service/list?" + "page=" + page.orElse(1) + "&maxPageItem=" + maxPageItem.orElse(2);
     }
 }

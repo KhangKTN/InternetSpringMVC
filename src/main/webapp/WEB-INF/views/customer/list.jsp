@@ -10,16 +10,11 @@
                 <div class="page-content">
                     <div class="row">
                         <div class="col-xs-12">
-                            <%--                            <c:if test="${not empty messageResponse}">--%>
-                            <%--                                <div class="alert alert-${alert}">--%>
-                            <%--                                        ${messageResponse}--%>
-                            <%--                                </div>--%>
-                            <%--                            </c:if>--%>
                             <div class="widget-box table-filter mb-3">
                                 <div class="table-btn-controls">
                                     <div class="pull-right tableTools-container d-flex justify-content-between">
                                         <a flag="info"
-                                           href="/computer"
+                                           href="/customer"
                                            class="dt-button buttons-colvis btn btn-lg btn-white btn-outline-primary btn-bold" data-toggle="tooltip"
                                            title='Add computer' >
                                             <span>
@@ -59,9 +54,12 @@
                                                     <td>${item.address}</td>
                                                     <td>${item.phone}</td>
                                                     <td>${item.email}</td>
-                                                    <td>
-                                                        <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                    <td class="text-center">
+                                                        <a class="btn btn-sm btn-primary btn-edit me-2" data-toggle="tooltip"
                                                            title="Update customer" href='/customer/${item.id}'><i class="fa-solid fa-pen-to-square"></i>
+                                                        </a>
+                                                        <a data-bs-custom-class="bg-danger" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover focus" data-bs-content="Delete computer" class="btn btn-sm btn-outline-danger"
+                                                           href='/customer/delete/${item.id}/?page=${page}&maxPageItem=2' onclick="return confirm('Do you want delete?')"><i class="fa-solid fa-trash"></i>
                                                         </a>
                                                     </td>
                                                 </tr>

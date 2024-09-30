@@ -2,16 +2,13 @@ package org.example.repository;
 
 import org.example.domain.CustomerComputer;
 import org.example.domain.CustomerComputerId;
-import org.example.domain.CustomerService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface CustomerComputerRepository extends JpaRepository<CustomerComputer, CustomerComputerId>{
@@ -29,4 +26,9 @@ public interface CustomerComputerRepository extends JpaRepository<CustomerComput
     + " and DATE_ADD(CAST(CONCAT(c.startDate, ' ', c.startTime) as datetime), INTERVAL c.timeUsed MINUTE) > CURRENT_TIMESTAMP",
     nativeQuery = true)
     List<Object[]> findCustomerUsingComputer(String customerId);
+
+
+    boolean existsByCustomerComputerIdComputerId(Long computerId);
+
+    boolean existsByCustomerComputerIdCustomerId(String id);
 }
